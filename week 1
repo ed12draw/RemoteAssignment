@@ -1,0 +1,257 @@
+week 1
+
+// Swift Basic
+
+// 1
+
+let PI: Double = 3.14159
+
+// 圓周率PI在數學上是一個常數，且為除不盡的非整數，因此我用let宣告，並給予Double Type.
+
+// 2
+
+let x: Int = 2
+let y: Int = 8
+let average = (x + y) / 2
+
+// 3
+
+/*
+ 須將前述的x,y改宣告為double或float type
+
+ (10 / 3)由於10和3都是int type, 所以結果也會是int type的3,小數點後面無法存取
+ (10.0 / 3.0)兩者皆為double type, 所以結果可顯示到小數點位數, 會是double type的3.33333(後十五位)
+*/
+
+10 / 3
+10.0 / 3.0
+
+// 4
+
+var flag: Bool = true
+var inputString: String = "Hello world."
+let bitsInBite: Int = 8
+let averageScore: Double = 86.8
+
+// 5
+
+var salary = 22000
+salary += 28000
+
+// 6
+
+// Equality operator in swift is ==
+
+// 7
+
+let a = 10
+let b = 3
+let remain = a % b
+
+// 8
+
+/*
+ let是宣告成常數，無法改變此常數的內容，若程式後面不須更動其內容通常是宣告成常數
+ var是宣告成變數，可以將新的內容重新assign到變數裡
+*/
+
+// 9
+
+/*
+ 不使用空白、開頭不能使用數字及特殊字元、以及遵守camelCase。
+ camelCase: 例如包含複合單字best programming language,
+ 則第一個單字小寫，其餘單字開頭大寫：bestProgrammingLanguage.以方便閱讀。
+*/
+
+// Swift Collection and Control Flow
+
+// Array
+
+// 1
+
+var myFriends: [String] = []
+
+// 2
+
+myFriends = ["Ian", "Bomi", "Kevin"]
+
+// 3
+
+myFriends.append("Michael")
+
+// 4
+
+myFriends.insert("Kevin", at: 0)
+myFriends.remove(at: 3)
+
+// 5
+
+for myFriend in myFriends {
+    print(myFriend)
+}
+
+// 6
+
+myFriends.count
+/*
+ 不存在位於index 5的朋友。因為我使用myFriends.count出來結果是4，
+ 表示此array裡僅含四個朋友，index 5是指第六個朋友，故不存在。
+*/
+
+// 7
+
+/*
+ 先宣告一個變數（或常數），再將arrayname[0] assign給它。
+ 以前題為例：let x = myFriends[0]，x即為此array第一個元素之值。
+*/
+
+// 8
+
+/*
+ 先用arrayname.count，得知此array共有幾個元素在內（假設為n個），
+ 再宣告一個變數（或常數），再將arrayname[n-1] assign給它。
+ 以前題為例：let y = myFriends[n-1]，y即為此array最後一個元素之值。
+ */
+
+// Dictionary
+
+// 1
+
+var myCountryNumber: [String: Int]
+
+// 2
+
+myCountryNumber = ["US" : 1, "GB" : 44, "JP" : 81]
+
+// 3
+
+myCountryNumber["GB"] = 0
+
+// 4
+
+/*
+ 須先決定此dictionary的key及value的type才行，
+ 假設兩者皆為String type，則可：
+ 1. var emptyDictionary: [String : String] = [:]
+ 2. var emptyDictionary = [String : String]()
+*/
+
+// For, While, Repeat
+
+// 1
+
+let lottoNumbers = [10,9,8,7,6,5]
+
+for lottoNumber in 3...5 {
+    print(lottoNumbers[lottoNumber])
+}
+
+// 2
+
+for lottoNumber in 1...6 {
+    print(lottoNumbers[6 - lottoNumber])
+}
+
+for lottoNumber in 1...3 {
+    print(lottoNumbers[lottoNumber * 2 - 2])
+}
+
+// 3
+
+var counter1 = 0
+var counter2 = 1
+
+while counter1 < 6 {
+    print(lottoNumbers[5 - counter1])
+    counter1 += 1
+}
+
+while counter2 < 4 {
+    print(lottoNumbers[counter2 * 2 - 2])
+    counter2 += 1
+}
+
+// 4
+
+var counter3 = 0
+var counter4 = 1
+
+repeat {
+    print(lottoNumbers[5 - counter3])
+    counter3 += 1
+} while counter3 < 6
+
+repeat {
+    print(lottoNumbers[counter4 * 2 - 2])
+    counter4 += 1
+} while counter4 < 4
+
+// If statement
+
+// 1
+
+var isRaining = true // default: the weather is raining.
+
+if isRaining {
+    print("It's raining, I don't want to work today.")
+} else {
+    print("Although it's sunny, I still don't want to work today.")
+}
+
+// Switch
+
+// 1
+
+var jobLevel = 1 // 假設一開始jobLevel為1
+
+switch jobLevel {
+case 1: print("Member")
+case 2: print("Team Leader")
+case 3: print("Manager")
+case 4: print("Director")
+default: print("We don't have this job")
+}
+
+// Function in Swift
+
+// 1
+
+func greet(person: String) -> String {
+    var greeting = "Hello, " + person
+    return greeting
+}
+
+greet(person: "Celeste")
+
+// 2
+
+func multiply(a: Int, b: Int = 10) {
+    let result = a * b
+    print(result)
+}
+
+// 3
+
+/*
+ parameter label是形式上的參數，告訴程式呼叫function時，需要輸入的資料個數與type，
+ argument label是呼叫出function時，實際上回傳給它的資料。
+*/
+
+// 4
+
+/*
+ 這兩個function都會出現error!
+ 第一個function期望return String，但呼叫後卻沒有收到任何東西，
+ 第二個function期望return Double，呼叫後也沒有收到任何東西，
+ 若沒有指定String, Double則return type為Void。
+*/
+
+// Others
+
+// 1
+
+/*
+ 先在網站選擇New repository，建立專案的儲存庫，而其分支有分Master and other branches，
+ 要upload the local projects到github上，即執行提交（commit），將其push至github的雲端儲存庫，
+ 亦能使用pull request的功能，在github上與其他使用者展開專案的討論。
+*/
