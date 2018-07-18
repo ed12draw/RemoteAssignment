@@ -1,0 +1,253 @@
+// week 2
+
+// Objective-Oriented Swift
+
+// 1
+
+enum Gender {
+    case male
+    case female
+    case undefined
+}
+
+class Animal {
+    var gender: Gender
+    
+    init (gender: Gender) {
+        switch gender {
+        case .male: self.gender = Gender.male
+        case .female: self.gender = Gender.female
+        case .undefined: self.gender = Gender.undefined
+        }
+
+    }
+    
+    func eat() {
+        print("I eat everything!")
+    }
+}
+
+var gender = Animal(gender: .male)
+gender.eat()
+
+// 2
+
+class Elephant: Animal {
+    override func eat() {
+        print("I eat grass!")
+    }
+}
+
+class Tiger: Animal {
+    override func eat() {
+        print("I eat meat!")
+    }
+}
+
+class Horse: Animal {
+    override func eat() {
+        print("I eat grass!")
+    }
+}
+
+// 3
+
+class Zoo {
+    var weeklyHot: Animal
+    
+    init(weeklyHot: Animal) {
+        self.weeklyHot = weeklyHot
+    }
+}
+
+let tiger = Tiger(gender: .male)
+let elephant = Elephant(gender: .female)
+let horse = Horse(gender: .undefined)
+let zoo = Zoo(weeklyHot: Tiger(gender: .male))
+zoo.weeklyHot = elephant
+zoo.weeklyHot
+
+// 4
+
+/*
+ 在此課程中，我學到了如何建構struct與class及其應用，以及兩者的差異。
+ Struct的存取是value type，且會為stored properties自動取得member wise initializers。
+ Class的存取是reference type，需要為其提供initializer(使用關鍵字init)，且class有繼承的特性，可以讓sub class繼承super class的特性。
+*/
+
+// 5
+
+/*
+ Struct的存取是value type，且擁有member wise initializer，所以不需再寫initializer methods.
+ Class的存取是reference type，需要為其提供initializer methods，且class有可讓sub class繼承super class(parent)的特性，
+ 為兩者最大的不同之處。
+*/
+
+// 6
+
+/*
+ instance method是由struct, class, enum等創造出的instance所呼叫的函式，
+ type method則不須由instance呼叫，可以該類別自行呼叫的函式。
+*/
+
+// 7
+
+/*
+ 使用關鍵字init，先初始化(initialize)class or struct裡面宣告的stored properties，
+ 初始化後方可讓其後創造出的instance使用。
+*/
+
+// 8
+
+/*
+ 在instance method中的self指的是在此函式中作為input的parameter。
+*/
+
+// 9
+
+/*
+ value type為資料是以value方式存取，和存取的地方無關，只有直接對此變數或常數更動才會改變。
+ reference type為資料以reference方式存取，此變數或常數內容為指向另一資料的位置，
+ 因此只要改變原本變數或常數的值，也會連帶改變後來指向此變數或常數的新變數或常數的值。
+*/
+ 
+// Enumerations and Optionals in Swift
+
+// 1
+
+enum Gasoline: String {
+    case ninetytwo = "92"
+    case ninetyfive = "95"
+    case ninetyeight = "98"
+    case diesel = "diesel"
+    
+    func getPrice(gasoline: Gasoline) -> Int {
+        switch gasoline {
+        case .ninetytwo: return 100    // assumed price of 92 is 100
+        case .ninetyfive: return 200   // assumed price of 95 is 200
+        case .ninetyeight: return 300  // assumed price of 98 is 300
+        case .diesel: return 400       // assumed price of diesel is 400
+        }
+    }
+}
+
+var gasoline = Gasoline(rawValue: "92")
+gasoline?.getPrice(gasoline: .ninetytwo)
+Gasoline.ninetytwo.rawValue
+
+// associated value
+
+/*
+ enum's associated value為列舉中的相關值，可以在需要時儲存其他類別的值於member中，
+ 以第一題為例，假設想儲存92汽油的價格、容量、進貨日，則可設為case ninetytwo(Int, Int, Int)。
+ 在應用上，將其個別宣告為變數或常數，即可將這些相關值取出使用。
+ 以第一題為例，可在一switch內：case .ninetytwo(let price, let quantity, let day): ~ 即可print出個別之值。
+*/
+
+// 2
+
+class Pet {
+    let name: String          // 使用let宣告，因為寵物名稱應不會變。
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+class People {
+    var pet: Pet?             // 使用var宣告，因為人可能因各種因素失去寵物。(死亡、棄養、贈送...etc)
+    
+    init(pet: Pet?) {
+        self.pet = pet
+    }
+}
+
+let cat = Pet(name: "meow")
+let edward = People(pet: cat)
+let susan = People(pet: nil)
+
+// guard let
+
+func myPet(people: People) -> Pet? {
+    guard let pet = people.pet else {
+    return nil
+}
+    return pet
+}
+
+myPet(people: edward)
+myPet(people: susan)
+
+// if let
+
+func havePet(people: People) -> Pet? {
+    if let pet = people.pet {
+        return pet
+    } else {
+        return nil
+    }
+}
+
+havePet(people: edward)
+havePet(people: susan)
+
+// Protocol in Swift
+
+// 1 ~ 6
+
+protocol PoliceMan {
+    func arrestCriminals()
+}
+
+protocol ToolMan {
+    func fixComputer()
+}
+
+struct Person: PoliceMan {
+    var name: String
+    var toolMan: ToolMan
+    
+    func arrestCriminals() {
+    
+    }
+
+}
+
+struct Engineer: ToolMan {
+    func fixComputer() {
+        
+    }
+}
+
+let person = Person(name: "Steven", toolMan: Engineer())
+print(person)
+
+// Error Handling in Swift
+
+// 1
+
+enum GuessNumberGameError: Error {
+    case wrongNumber
+}
+
+class GuessNumberGame {
+    var targetNumber = 10
+    var player: String
+    
+    init(player: String) {
+        self.player = player
+    }
+    
+    func guess(number: Int) throws {
+        guard number == targetNumber else {
+            throw GuessNumberGameError.wrongNumber
+        }
+        
+        print("Guess the right number: \(targetNumber)")
+    }
+}
+
+// 2
+
+let somePlayer = GuessNumberGame(player: "Edward")
+try somePlayer.guess(number: 20)
